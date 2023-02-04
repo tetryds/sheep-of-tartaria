@@ -32,7 +32,6 @@ namespace Sheep
         [Command]
         public void AttackCmd()
         {
-            Debug.Log("attack");
             int count = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
 
             for (int i = 0; i < count; i++)

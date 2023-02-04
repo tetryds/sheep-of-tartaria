@@ -21,6 +21,8 @@ namespace Sheep
 
         [SerializeField] bool isHerder = true;
 
+        int score;
+
         public override void OnStartClient()
         {
             NetworkClient.RegisterPrefab(sheep);
@@ -53,6 +55,12 @@ namespace Sheep
             }
         }
 
+        public void AddScore()
+        {
+            score++;
+            Debug.Log($"Score incremented to {score}");
+        }
+
         private void SpawnHerder(NetworkConnectionToClient conn)
         {
             HerderController herder = Instantiate(herderPrefab, herderSpawn.position, Quaternion.identity);
@@ -64,5 +72,6 @@ namespace Sheep
             ProtectorController protector = Instantiate(protectorPrefab, protectorSpawn.position, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, protector.gameObject);
         }
+
     }
 }
