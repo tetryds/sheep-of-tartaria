@@ -154,9 +154,12 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  speed: 5
-  windDown: 0
-  randomWeight: 0
+  searchRandomIntensity: 0.5
+  searchSpeed: 3
+  chaseSpeed: 4
+  runSpeed: 7
+  range: 8
+  maxColliderCount: 32
   rb: {fileID: 8976990924096079353}
 --- !u!135 &8976990924096079358
 SphereCollider:
