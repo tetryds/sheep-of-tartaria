@@ -15,8 +15,10 @@ namespace Sheep
 
         public override void OnStartClient()
         {
-            if (!isOwned) return;
+            Dir = Vector3.right;
+            LookDir = Dir.normalized;
 
+            if (!isOwned) return;
             FindObjectOfType<CameraController>().SetFollow(transform);
             dirIcon.ShowIcon(true);
         }

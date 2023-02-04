@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Sheep
 {
-    public class SheepController : NetworkBehaviour
+    public class WolfController : NetworkBehaviour
     {
         [SerializeField] float speed;
         [SerializeField] float windDown;

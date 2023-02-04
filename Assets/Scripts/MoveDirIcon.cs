@@ -17,6 +17,8 @@ namespace Sheep
 
         private void Update()
         {
+            if (!dirIcon.gameObject.activeSelf) return;
+
             dirIcon.rotation = Quaternion.LookRotation(moveController.LookDir, Vector3.up);
         }
     }
