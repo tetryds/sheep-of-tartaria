@@ -26,7 +26,7 @@ namespace Sheep
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                HerdCmd(move.Dir);
+                HerdCmd(move.LookDir);
             }
         }
 
@@ -50,16 +50,32 @@ namespace Sheep
 
             Vector3 forwardDir = Vector3.Project(dir, moveDir);
             bool isInFront = Vector3.Dot(forwardDir, moveDir) >= 0f;
-            float forwardIntensity = isInFront ? forwardHerd.Evaluate(forwardDir.magnitude) : 0f;
+            if (!isInFront) return;
+
+            float forwardFactor = forwardDir.magnitude / range;
+            float forwardIntensity = forwardHerd.Evaluate(forwardFactor);
             Vector3 forwardMove = forwardIntensity * forwardDir.normalized;
 
             Vector3 lateralDir = Vector3.ProjectOnPlane(dir, moveDir);
-            float lateralIntensity = lateralHerd.Evaluate(lateralDir.magnitude);
+            float lateralFactor = lateralDir.magnitude / range;
+            float lateralIntensity = lateralHerd.Evaluate(lateralFactor);
             Vector3 lateralMove = lateralDir.normalized * lateralIntensity;
 
             Vector3 move = forwardMove + lateralMove;
 
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardDir, Color.blue, 2f);
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardMove, Color.cyan, 2f);
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralDir, Color.red, 2f);
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralMove, Color.magenta, 2f);
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, move, Color.gray, 2f);
+
             sheep.AddMoveEffect(move);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.2f, range);
         }
     }
 }

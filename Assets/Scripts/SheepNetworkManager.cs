@@ -8,6 +8,9 @@ namespace Sheep
 {
     public class SheepNetworkManager : NetworkManager
     {
+        [Header("Sheep")]
+        [SerializeField] GameObject sheep;
+
         [Header("Herder")]
         [SerializeField] Transform herderSpawn;
         [SerializeField] HerderController herderPrefab;
@@ -20,6 +23,7 @@ namespace Sheep
 
         public override void OnStartClient()
         {
+            NetworkClient.RegisterPrefab(sheep);
             NetworkClient.RegisterPrefab(herderPrefab.gameObject);
             NetworkClient.RegisterPrefab(protectorPrefab.gameObject);
         }
@@ -47,23 +51,12 @@ namespace Sheep
             {
                 SpawnProtector(conn);
             }
-
-            //Transform startPos = GetStartPosition();
-            //GameObject player = startPos != null
-            //    ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
-            //    : Instantiate(playerPrefab);
-
-            //// instantiating a "Player" prefab gives it the name "Player(clone)"
-            //// => appending the connectionId is WAY more useful for debugging!
-            //player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
-            //NetworkServer.AddPlayerForConnection(conn, player);
         }
 
         private void SpawnHerder(NetworkConnectionToClient conn)
         {
             HerderController herder = Instantiate(herderPrefab, herderSpawn.position, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, herder.gameObject);
-            Debug.Log("Ts");
         }
 
         private void SpawnProtector(NetworkConnectionToClient conn)
