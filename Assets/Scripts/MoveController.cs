@@ -27,8 +27,8 @@ namespace Sheep
         {
             if (!isOwned) return;
 
-            float vertical = Input.GetAxisRaw("Vertical");
-            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            float horizontal = Input.GetAxis("Horizontal");
 
             Dir = new Vector3(horizontal, 0f, vertical);
             Dir = Vector3.ClampMagnitude(Dir, 1f);

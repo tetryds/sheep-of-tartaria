@@ -154,7 +154,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  speed: 5
+  speed: 4
   windDown: 0.8
   randomWeight: 0.1
   rb: {fileID: 9085441100475464481}

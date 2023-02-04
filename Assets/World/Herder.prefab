@@ -238,7 +238,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  speed: 10
+  speed: 4.5
   dirIcon: {fileID: 4979031909774298863}
 --- !u!114 &3177063219678229601
 MonoBehaviour:

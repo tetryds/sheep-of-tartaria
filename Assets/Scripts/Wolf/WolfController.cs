@@ -17,6 +17,7 @@ namespace Sheep
         [SerializeField] float range;
         [SerializeField] int maxColliderCount = 32;
         [SerializeField] Rigidbody rb;
+        [SerializeField] Transform sheepPivot;
 
         Vector3 moveDir;
 
@@ -26,6 +27,13 @@ namespace Sheep
         Dictionary<WolfState, Action<float>> stateMap;
 
         SheepController targetSheep;
+
+        SheepController pickedSheep;
+
+        private void Start()
+        {
+
+        }
 
         public override void OnStartServer()
         {
@@ -51,7 +59,8 @@ namespace Sheep
 
             stateMap[state].Invoke(Time.fixedDeltaTime);
 
-            ScanSurroundings();
+            if (pickedSheep != null)
+                pickedSheep.ForceMove(sheepPivot.position);
         }
 
 
@@ -79,7 +88,7 @@ namespace Sheep
 
         private void DoRun(float deltaTime)
         {
-            //WIP: Run away from the center
+            //WIP: Run away from the center towards something that makes sense
 
             moveDir = transform.position.normalized;
             rb.velocity = runSpeed * moveDir;
@@ -114,11 +123,14 @@ namespace Sheep
         private void PickSheep(SheepController sheep)
         {
             state = WolfState.Running;
+            sheep.PickUp();
+            pickedSheep = sheep;
         }
 
         private void DropSheep()
         {
-
+            pickedSheep?.Release();
+            pickedSheep = null;
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -129,7 +141,6 @@ namespace Sheep
             if (sheep == null) return;
 
             PickSheep(sheep);
-            //Collect sheep
         }
 
         private void OnDrawGizmos()
