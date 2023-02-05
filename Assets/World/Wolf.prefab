@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4377776489083389017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sheep Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2229189039048564831}
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0.00000081956375}
-  m_LocalPosition: {x: 0, y: 1.747, z: 0}
+  m_LocalPosition: {x: -0, y: 1.821, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8976990924096079348}
   - component: {fileID: 8976990924096079359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lobocustom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8976990924096079353}
   - component: {fileID: 8976990924096079333}
   - component: {fileID: 8976990924096079342}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,14 +186,50 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  searchRandomFrequency: 0.001
   searchRandomIntensity: 0.5
+  searchBiasCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.1
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08976851
+    - serializedVersion: 3
+      time: 31.786
+      value: 0.3353094
+      inSlope: 0.021604711
+      outSlope: 0.021604711
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 50
+      value: 1
+      inSlope: 0.057714593
+      outSlope: 0.057714593
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04994648
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   searchSpeed: 3
   chaseSpeed: 4
   runSpeed: 5.5
+  runRandomIntensity: 1.5
   range: 8
   maxColliderCount: 32
   rb: {fileID: 8976990924096079353}
   sheepPivot: {fileID: 4377776489083389017}
+  BiasTargetPos: {x: 0, y: 0, z: 0}
 --- !u!135 &8976990924096079358
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -201,7 +237,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8976990924096079346}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a3db9ca0240432e4998f9c54f10d7fd6, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -221,7 +257,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &8976990924096079333
 MonoBehaviour:

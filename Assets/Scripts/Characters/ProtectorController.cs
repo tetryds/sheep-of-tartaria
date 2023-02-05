@@ -36,13 +36,10 @@ namespace Sheep
 
             for (int i = 0; i < count; i++)
             {
-                var sheepPlant = colliders[i].GetComponent<SheepPlantController>();
-                if (sheepPlant != null)
+                if (colliders[i].TryGetComponent(out SheepPlantController sheepPlant))
                     sheepPlant.Reap();
-                var wolf = colliders[i].GetComponent<WolfController>();
-                if (wolf != null)
+                if (colliders[i].TryGetComponent(out WolfController wolf))
                     wolf.ScareAway();
-
             }
         }
 

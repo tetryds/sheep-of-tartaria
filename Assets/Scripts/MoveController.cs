@@ -9,6 +9,7 @@ namespace Sheep
     {
         [SerializeField] float speed;
         [SerializeField] MoveDirIcon dirIcon;
+        [SerializeField] Rigidbody rb;
 
         public Vector3 Dir { get; private set; }
         public Vector3 LookDir { get; private set; }
@@ -32,10 +33,11 @@ namespace Sheep
 
             Dir = new Vector3(horizontal, 0f, vertical);
             Dir = Vector3.ClampMagnitude(Dir, 1f);
-            Vector3 move = speed * Time.deltaTime * Dir;
             if (Dir != Vector3.zero)
                 LookDir = Dir.normalized;
-            transform.Translate(move);
+            //Vector3 move = speed * Time.deltaTime * Dir;
+            //transform.Translate(move);
+            rb.velocity = speed * Dir;
         }
     }
 }

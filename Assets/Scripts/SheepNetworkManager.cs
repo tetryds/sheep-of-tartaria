@@ -8,6 +8,10 @@ namespace Sheep
 {
     public class SheepNetworkManager : NetworkManager
     {
+        [Header("Wolf")]
+        [SerializeField] GameObject wolf;
+        [SerializeField] WolfSpawner spawner;
+
         [Header("Sheep")]
         [SerializeField] GameObject sheep;
 
@@ -26,6 +30,7 @@ namespace Sheep
         public override void OnStartClient()
         {
             NetworkClient.RegisterPrefab(sheep);
+            NetworkClient.RegisterPrefab(wolf);
             NetworkClient.RegisterPrefab(herderPrefab.gameObject);
             NetworkClient.RegisterPrefab(protectorPrefab.gameObject);
         }
@@ -48,10 +53,14 @@ namespace Sheep
             {
                 SpawnHerder(conn);
                 isHerder = false;
+                //WIP: TEST ONLY
             }
             else
             {
                 SpawnProtector(conn);
+
+                //TODO: Manage game statee and win conditions
+                spawner.StartSpawn();
             }
         }
 

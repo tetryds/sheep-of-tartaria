@@ -13,10 +13,9 @@ namespace Sheep
         [SerializeField] Rigidbody rb;
 
         Vector3 moveDir;
-
-        bool free = true;
-
         RigidbodyConstraints defaultConstraints;
+
+        public bool Free { get; private set; } = true;
 
         public void AddMoveEffect(Vector3 dir)
         {
@@ -36,7 +35,8 @@ namespace Sheep
 
         public void PickUp()
         {
-            free = false;
+            if (!Free) return;
+            Free = false;
             rb.constraints = RigidbodyConstraints.None;
             rb.velocity = Vector3.zero;
             rb.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.down);
@@ -46,7 +46,7 @@ namespace Sheep
 
         public void Release()
         {
-            free = true;
+            Free = true;
             rb.velocity = Vector3.zero;
             rb.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
             rb.constraints = defaultConstraints;
@@ -57,7 +57,7 @@ namespace Sheep
         {
             if (!isServer) return;
 
-            if (!free) return;
+            if (!Free) return;
 
             Move(Time.fixedDeltaTime);
             WindDown(Time.fixedDeltaTime);
@@ -68,7 +68,8 @@ namespace Sheep
         {
             //Vector3 move = speed * deltaTime * moveDir;
             Vector3 move = Vector3.ClampMagnitude(moveDir, 1f);
-            rb.velocity = speed * move;
+            Vector3 gravity = Vector3.down * 5f;
+            rb.velocity = speed * move + gravity;
         }
 
         private void WindDown(float deltaTime)
