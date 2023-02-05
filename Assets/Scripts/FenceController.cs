@@ -21,6 +21,7 @@ namespace Sheep
 
             NetworkServer.Destroy(sheep.gameObject);
             gameManager.AddScore();
+            PlaySound();
         }
 
         [ClientRpc]

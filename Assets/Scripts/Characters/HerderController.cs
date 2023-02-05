@@ -14,6 +14,10 @@ namespace Sheep
         [SerializeField] AnimationCurve forwardHerd;
         [SerializeField] int maxColliderCount = 128;
 
+        [Header("Effects")]
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] GameObject skillEffect;
+
         [SerializeField] MoveController move;
         Collider[] colliders;
 
@@ -70,13 +74,15 @@ namespace Sheep
 
             skillEnabled = false;
 
-            ResetCooldown();
+            SkillUsed(moveDir, transform.position);
         }
 
         [ClientRpc]
-        public void ResetCooldown()
+        public void SkillUsed(Vector3 moveDir, Vector3 pos)
         {
+            audioSource.Play();
             cooldownUI?.SetCooldownTimer(skillCooldown);
+            Instantiate(skillEffect, pos, Quaternion.LookRotation(moveDir, Vector3.up));
         }
 
         public void Herd(SheepController sheep, Vector3 moveDir)

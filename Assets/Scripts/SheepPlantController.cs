@@ -11,7 +11,6 @@ namespace Sheep
 
         public void Reap()
         {
-            Debug.Log("reap");
             GameObject sheep = Instantiate(baseSheep, transform.position, Quaternion.identity);
             NetworkServer.Spawn(sheep);
             NetworkServer.Destroy(gameObject);

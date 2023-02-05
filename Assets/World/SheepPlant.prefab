@@ -117,7 +117,7 @@ Transform:
   m_Children:
   - {fileID: 2068555919631515298}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6688241187431376001
 MonoBehaviour:
@@ -152,6 +152,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   baseSheep: {fileID: 6448564259837794912, guid: ebf22d5fb6d348146a13d8185b060891,
+    type: 3}
+  audioEffect: {fileID: 3410854204234448344, guid: 26e29b3ef8f427d4c85e2354f2961115,
     type: 3}
 --- !u!136 &8133421604101375326
 CapsuleCollider:

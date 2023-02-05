@@ -13,6 +13,10 @@ namespace Sheep
 
         [SerializeField] int maxColliderCount = 128;
 
+        [Header("Audio")]
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] GameObject skillEffect;
+
         [SerializeField] MoveController move;
         Collider[] colliders;
 
@@ -76,13 +80,15 @@ namespace Sheep
 
             skillEnabled = false;
 
-            ResetCooldown();
+            SkillUsed(lookDir, transform.position);
         }
 
         [ClientRpc]
-        public void ResetCooldown()
+        public void SkillUsed(Vector3 moveDir, Vector3 pos)
         {
+            audioSource.Play();
             cooldownUI?.SetCooldownTimer(skillCooldown);
+            Instantiate(skillEffect, pos, Quaternion.LookRotation(moveDir, Vector3.up));
         }
 
         private void OnDrawGizmos()
