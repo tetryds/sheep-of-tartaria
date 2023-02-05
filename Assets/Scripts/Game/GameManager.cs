@@ -44,14 +44,7 @@ namespace Sheep
                 .AddTransition(GameEvent.Lose, GameState.Running, GameState.Lost, OnLose);
         }
 
-        ////Might move this to the UI itself
-        //private void Update()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
-        //    {
-        //        //Connect and play
-        //    }
-        //}
+
 
         private void FixedUpdate()
         {

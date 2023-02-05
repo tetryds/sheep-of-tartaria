@@ -45,7 +45,7 @@ namespace Sheep
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
             {
-                HerdCmd(move.LookDir);
+                HerdCmd(move.LookDir, transform.position);
             }
         }
 
@@ -58,23 +58,23 @@ namespace Sheep
         }
 
         [Command]
-        public void HerdCmd(Vector3 moveDir)
+        public void HerdCmd(Vector3 moveDir, Vector3 pos)
         {
             Debug.Log("Herd CMD");
             if (!skillEnabled) return;
 
-            int count = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
+            int count = Physics.OverlapSphereNonAlloc(pos, range, colliders);
 
             for (int i = 0; i < count; i++)
             {
                 var sheep = colliders[i].GetComponent<SheepController>();
                 if (sheep != null)
-                    Herd(sheep, moveDir);
+                    Herd(sheep, moveDir, pos);
             }
 
             skillEnabled = false;
 
-            SkillUsed(moveDir, transform.position);
+            SkillUsed(moveDir, pos);
         }
 
         [ClientRpc]
@@ -85,9 +85,9 @@ namespace Sheep
             Instantiate(skillEffect, pos, Quaternion.LookRotation(moveDir, Vector3.up));
         }
 
-        public void Herd(SheepController sheep, Vector3 moveDir)
+        public void Herd(SheepController sheep, Vector3 moveDir, Vector3 pos)
         {
-            Vector3 dir = sheep.transform.position - transform.position;
+            Vector3 dir = sheep.transform.position - pos;
             dir = Vector3.ProjectOnPlane(dir, Vector3.up);
 
             Vector3 forwardDir = Vector3.Project(dir, moveDir);
@@ -105,11 +105,11 @@ namespace Sheep
 
             Vector3 move = (forwardMove + lateralMove) * skillStrenghtModifier;
 
-            Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardDir, Color.blue, 2f);
-            Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardMove, Color.cyan, 2f);
-            Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralDir, Color.red, 2f);
-            Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralMove, Color.magenta, 2f);
-            Debug.DrawRay(transform.position + Vector3.up * 0.1f, move, Color.gray, 2f);
+            //Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardDir, Color.blue, 2f);
+            //Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardMove, Color.cyan, 2f);
+            //Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralDir, Color.red, 2f);
+            //Debug.DrawRay(transform.position + Vector3.up * 0.1f, lateralMove, Color.magenta, 2f);
+            //Debug.DrawRay(transform.position + Vector3.up * 0.1f, move, Color.gray, 2f);
 
             sheep.AddMoveEffect(move);
         }

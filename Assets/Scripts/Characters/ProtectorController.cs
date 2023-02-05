@@ -45,7 +45,7 @@ namespace Sheep
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
             {
-                AttackCmd(move.LookDir);
+                AttackCmd(move.LookDir, transform.position);
             }
         }
 
@@ -58,17 +58,17 @@ namespace Sheep
         }
 
         [Command]
-        public void AttackCmd(Vector3 lookDir)
+        public void AttackCmd(Vector3 lookDir, Vector3 pos)
         {
             if (!skillEnabled) return;
             Debug.Log("Attack CMD");
 
-            int count = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
+            int count = Physics.OverlapSphereNonAlloc(pos, range, colliders);
 
             for (int i = 0; i < count; i++)
             {
                 Collider collider = colliders[i];
-                Vector3 dir = collider.transform.position - transform.position;
+                Vector3 dir = collider.transform.position - pos;
                 float angle = Vector3.Angle(lookDir, dir);
                 if (angle > maxAngle) continue;
 
@@ -80,7 +80,7 @@ namespace Sheep
 
             skillEnabled = false;
 
-            SkillUsed(lookDir, transform.position);
+            SkillUsed(lookDir, pos);
         }
 
         [ClientRpc]
