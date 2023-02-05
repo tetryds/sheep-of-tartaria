@@ -8,6 +8,7 @@ namespace Sheep
     public class HerderController : NetworkBehaviour
     {
         [SerializeField] float range;
+        [SerializeField] float skillCooldown;
         [SerializeField] AnimationCurve lateralHerd;
         [SerializeField] AnimationCurve forwardHerd;
         [SerializeField] int maxColliderCount = 128;
@@ -15,9 +16,14 @@ namespace Sheep
         [SerializeField] MoveController move;
         Collider[] colliders;
 
+        bool skillEnabled = true;
+        SyncTimer skillTimer;
+
         public override void OnStartServer()
         {
             colliders = new Collider[maxColliderCount];
+            skillTimer = new SyncTimer(skillCooldown, 0f);
+            skillTimer.Timeout += () => skillEnabled = true;
         }
 
         private void Update()
@@ -30,9 +36,19 @@ namespace Sheep
             }
         }
 
+        private void FixedUpdate()
+        {
+            if (!isServer) return;
+
+            if (!skillEnabled)
+                skillTimer.Tick(Time.fixedDeltaTime);
+        }
+
         [Command]
         public void HerdCmd(Vector3 moveDir)
         {
+            //if (!skillEnabled) return;
+
             int count = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
 
             for (int i = 0; i < count; i++)

@@ -8,6 +8,7 @@ namespace Sheep
     public class ProtectorController : NetworkBehaviour
     {
         [SerializeField] float range;
+        [SerializeField] float maxAngle;
 
         [SerializeField] int maxColliderCount = 128;
 
@@ -36,9 +37,14 @@ namespace Sheep
 
             for (int i = 0; i < count; i++)
             {
-                if (colliders[i].TryGetComponent(out SheepPlantController sheepPlant))
+                Collider collider = colliders[i];
+                Vector3 dir = collider.transform.position - transform.position;
+                float angle = Vector3.Angle(move.LookDir, dir);
+                if (angle > maxAngle) continue;
+
+                if (collider.TryGetComponent(out SheepPlantController sheepPlant))
                     sheepPlant.Reap();
-                if (colliders[i].TryGetComponent(out WolfController wolf))
+                if (collider.TryGetComponent(out WolfController wolf))
                     wolf.ScareAway();
             }
         }

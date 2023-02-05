@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Codice.CM.Client.Differences.Graphic;
 using Mirror;
 using UnityEngine;
 
@@ -25,6 +24,11 @@ namespace Sheep
         [SerializeField] int maxColliderCount = 32;
         [SerializeField] Rigidbody rb;
         [SerializeField] Transform sheepPivot;
+
+        [Header("Scare")]
+        [SerializeField] float scareRange;
+        [SerializeField] float scareIntensity;
+        [SerializeField] float scareRandomIntensity;
 
         Vector3 moveDir;
 
@@ -165,6 +169,8 @@ namespace Sheep
             state = WolfState.Running;
             sheep.PickUp();
             pickedSheep = sheep;
+
+            ScareSheep();
         }
 
         private void DropSheep()
@@ -188,6 +194,23 @@ namespace Sheep
 
         }
 
+        private void ScareSheep()
+        {
+            int count = Physics.OverlapSphereNonAlloc(transform.position, scareRange, colliders);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (colliders[i].TryGetComponent(out SheepController sheep))
+                {
+                    Vector2 randomFactor = UnityEngine.Random.insideUnitCircle * scareRandomIntensity;
+                    Vector3 randomDir = new Vector3(randomFactor.x, 0f, randomFactor.y);
+                    Vector3 dir = (sheep.transform.position - transform.position).normalized * scareIntensity;
+                    dir = Vector3.ProjectOnPlane(dir, Vector3.up);
+                    sheep.AddMoveEffect(dir + randomDir);
+                }
+            }
+        }
+
         private void Despawn()
         {
             if (pickedSheep != null)
@@ -202,6 +225,8 @@ namespace Sheep
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.2f, range);
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.2f, scareRange);
         }
     }
 }

@@ -152,7 +152,7 @@ Transform:
   - {fileID: 8976990924096079348}
   - {fileID: 4377776489083389017}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8976990924096079343
 MonoBehaviour:
@@ -229,6 +229,9 @@ MonoBehaviour:
   maxColliderCount: 32
   rb: {fileID: 8976990924096079353}
   sheepPivot: {fileID: 4377776489083389017}
+  scareRange: 4
+  scareIntensity: 1
+  scareRandomIntensity: 1.3
   BiasTargetPos: {x: 0, y: 0, z: 0}
 --- !u!135 &8976990924096079358
 SphereCollider:

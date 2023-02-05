@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2068555919631515298}
   - component: {fileID: 4291758856400464753}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6688241187431376001}
   - component: {fileID: 539868940360477857}
   - component: {fileID: 8133421604101375326}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SheepPlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}

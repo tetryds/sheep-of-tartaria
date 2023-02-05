@@ -221,7 +221,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  range: 250
+  range: 2.5
+  maxAngle: 45
   maxColliderCount: 128
   move: {fileID: 3018003721582907409}
 --- !u!136 &1168427396644435127
@@ -331,8 +332,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4543133950308376657}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.735, z: 0}
-  m_LocalScale: {x: 0.29464293, y: 0.29464293, z: 0.29464293}
+  m_LocalPosition: {x: 0.227, y: 0.991, z: 0}
+  m_LocalScale: {x: 0.52392304, y: 0.52392304, z: 0.52392304}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3459975779740691103}
