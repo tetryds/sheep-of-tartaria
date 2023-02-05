@@ -223,6 +223,7 @@ MonoBehaviour:
   syncInterval: 0.1
   range: 2.5
   maxAngle: 45
+  skillCooldown: 2
   maxColliderCount: 128
   move: {fileID: 3018003721582907409}
 --- !u!136 &1168427396644435127

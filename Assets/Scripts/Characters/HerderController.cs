@@ -9,6 +9,7 @@ namespace Sheep
     {
         [SerializeField] float range;
         [SerializeField] float skillCooldown;
+        [SerializeField] float skillStrenghtModifier;
         [SerializeField] AnimationCurve lateralHerd;
         [SerializeField] AnimationCurve forwardHerd;
         [SerializeField] int maxColliderCount = 128;
@@ -16,14 +17,22 @@ namespace Sheep
         [SerializeField] MoveController move;
         Collider[] colliders;
 
-        bool skillEnabled = true;
         SyncTimer skillTimer;
+        bool skillEnabled = true;
+
+        CooldownUI cooldownUI;
 
         public override void OnStartServer()
         {
             colliders = new Collider[maxColliderCount];
             skillTimer = new SyncTimer(skillCooldown, 0f);
             skillTimer.Timeout += () => skillEnabled = true;
+        }
+
+        public override void OnStartClient()
+        {
+            if (!isOwned) return;
+            cooldownUI = FindObjectOfType<CooldownUI>();
         }
 
         private void Update()
@@ -47,7 +56,8 @@ namespace Sheep
         [Command]
         public void HerdCmd(Vector3 moveDir)
         {
-            //if (!skillEnabled) return;
+            Debug.Log("Herd CMD");
+            if (!skillEnabled) return;
 
             int count = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
 
@@ -57,6 +67,16 @@ namespace Sheep
                 if (sheep != null)
                     Herd(sheep, moveDir);
             }
+
+            skillEnabled = false;
+
+            ResetCooldown();
+        }
+
+        [ClientRpc]
+        public void ResetCooldown()
+        {
+            cooldownUI?.SetCooldownTimer(skillCooldown);
         }
 
         public void Herd(SheepController sheep, Vector3 moveDir)
@@ -77,7 +97,7 @@ namespace Sheep
             float lateralIntensity = lateralHerd.Evaluate(lateralFactor);
             Vector3 lateralMove = lateralDir.normalized * lateralIntensity;
 
-            Vector3 move = forwardMove + lateralMove;
+            Vector3 move = (forwardMove + lateralMove) * skillStrenghtModifier;
 
             Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardDir, Color.blue, 2f);
             Debug.DrawRay(transform.position + Vector3.up * 0.1f, forwardMove, Color.cyan, 2f);

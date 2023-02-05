@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Sheep
 {
     public class SheepNetworkManager : NetworkManager
     {
+        [SerializeField] GameManager gameManager;
+
         [Header("Wolf")]
         [SerializeField] GameObject wolf;
-        [SerializeField] WolfSpawner spawner;
 
         [Header("Sheep")]
         [SerializeField] GameObject sheep;
@@ -58,16 +60,9 @@ namespace Sheep
             else
             {
                 SpawnProtector(conn);
-
-                //TODO: Manage game statee and win conditions
-                spawner.StartSpawn();
             }
-        }
 
-        public void AddScore()
-        {
-            score++;
-            Debug.Log($"Score incremented to {score}");
+            gameManager.PlayerSpawned();
         }
 
         private void SpawnHerder(NetworkConnectionToClient conn)

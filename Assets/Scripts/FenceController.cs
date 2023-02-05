@@ -7,7 +7,7 @@ namespace Sheep
 {
     public class FenceController : NetworkBehaviour
     {
-        [SerializeField] SheepNetworkManager networkManager;
+        [SerializeField] GameManager gameManager;
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -17,7 +17,7 @@ namespace Sheep
             if (sheep == null) return;
 
             NetworkServer.Destroy(sheep.gameObject);
-            networkManager.AddScore();
+            gameManager.AddScore();
         }
     }
 }
