@@ -13,6 +13,7 @@ namespace Sheep
         [SerializeField] int requiredSheepCount;
         [SerializeField] float gameTimeout;
         [SerializeField] float restartTimeout;
+        [SerializeField] bool playAlone;
 
         [SerializeField] WolfSpawner spawner;
         [SerializeField] SheepCounterUI sheepCounter;
@@ -163,6 +164,7 @@ namespace Sheep
         public void AddScore()
         {
             score++;
+            sheepCounter.UpdateCount(score);
             if (score >= requiredSheepCount)
                 stateMachine.RaiseEvent(GameEvent.Win);
         }
@@ -170,6 +172,8 @@ namespace Sheep
         public void PlayerSpawned()
         {
             playerCount++;
+            if (playAlone)
+                stateMachine.RaiseEvent(GameEvent.Start);
             if (playerCount >= 2)
                 stateMachine.RaiseEvent(GameEvent.Start);
         }
